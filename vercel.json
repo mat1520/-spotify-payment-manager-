@@ -13,7 +13,7 @@
     "routes": [
         {
             "src": "/",
-            "dest": "/pay.html"
+            "dest": "/index.html"
         },
         {
             "src": "/api/(.*)",
