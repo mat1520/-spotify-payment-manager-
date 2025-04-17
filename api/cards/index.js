@@ -5,21 +5,28 @@ dotenv.config();
 
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const MONGODB_URI = `mongodb+srv://Mat1520:${DB_PASSWORD}@cluster0.so39idr.mongodb.net/?retryWrites=true&w=majority`;
-const DB_NAME = 'spotify_payments';
+const DB_NAME = 'spotify';
 const COLLECTION_NAME = 'cards';
 
 // Función para conectar a MongoDB
 async function connectToDatabase() {
-    const client = new MongoClient(MONGODB_URI);
-    await client.connect();
-    return client;
+    try {
+        const client = new MongoClient(MONGODB_URI);
+        await client.connect();
+        console.log('Conectado a MongoDB Atlas');
+        return client;
+    } catch (error) {
+        console.error('Error al conectar a MongoDB:', error);
+        throw error;
+    }
 }
 
 export default async function handler(req, res) {
     const { method } = req;
+    let client;
 
     try {
-        const client = await connectToDatabase();
+        client = await connectToDatabase();
         const db = client.db(DB_NAME);
         const collection = db.collection(COLLECTION_NAME);
 
@@ -50,6 +57,7 @@ export default async function handler(req, res) {
                 };
 
                 const result = await collection.insertOne(newCard);
+                console.log('Tarjeta guardada:', result);
                 res.status(201).json({ success: true, message: 'Tarjeta guardada exitosamente' });
                 break;
 
@@ -57,10 +65,12 @@ export default async function handler(req, res) {
                 res.setHeader('Allow', ['GET', 'POST']);
                 res.status(405).end(`Method ${method} Not Allowed`);
         }
-
-        await client.close();
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al procesar la solicitud' });
+        console.error('Error en el handler:', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud: ' + error.message });
+    } finally {
+        if (client) {
+            await client.close();
+        }
     }
 } 
