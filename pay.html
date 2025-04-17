@@ -671,20 +671,19 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Respuesta del servidor:', data);
                     if (data.success) {
                         alert('¡Tarjeta guardada exitosamente!');
-                        // Redirigir a la página de éxito
-                        window.location.href = '/index.html';
+                        window.location.href = data.redirectUrl || '/index.html';
                     } else {
-                        throw new Error(data.error || 'Error al guardar la tarjeta');
+                        throw new Error(data.message || 'Error al guardar la tarjeta');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al guardar la tarjeta: ' + error.message);
+                    alert(error.message || 'Error al procesar la solicitud');
                 })
                 .finally(() => {
-                    // Restaurar el botón
                     submitButton.disabled = false;
                     submitButton.textContent = 'Guardar';
                 });
