@@ -1,23 +1,16 @@
 {
-    "name": "spotify-clone",
+    "name": "spotify-payment-manager",
     "version": "1.0.0",
-    "description": "Clon de Spotify con sistema de pago",
-    "main": "server.js",
-    "type": "module",
+    "description": "Spotify Payment Manager",
+    "main": "index.js",
     "scripts": {
-        "start": "node server.js",
-        "dev": "vercel dev",
-        "build": "echo 'No build step required'",
-        "test": "node test-connection.js"
+        "start": "vercel dev",
+        "deploy": "vercel --prod"
     },
     "dependencies": {
-        "@supabase/supabase-js": "^2.49.4",
-        "body-parser": "^1.20.2",
-        "dotenv": "^16.5.0",
-        "express": "^4.18.2",
-        "mongodb": "^4.17.2"
+        "@supabase/supabase-js": "^2.39.7"
     },
     "devDependencies": {
-        "vercel": "^28.0.0"
+        "vercel": "^33.5.3"
     }
 }

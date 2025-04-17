@@ -2,34 +2,22 @@
     "version": 2,
     "builds": [
         {
-            "src": "server.js",
-            "use": "@vercel/node"
-        },
-        {
             "src": "*.html",
             "use": "@vercel/static"
+        },
+        {
+            "src": "api/**/*.js",
+            "use": "@vercel/node"
         }
     ],
     "routes": [
         {
-            "src": "/api/cards",
-            "dest": "/server.js"
-        },
-        {
             "src": "/",
-            "dest": "/index.html"
-        },
-        {
-            "src": "/pay",
             "dest": "/pay.html"
         },
         {
-            "src": "/js/(.*)",
-            "dest": "/js/$1"
-        },
-        {
-            "src": "/styles/(.*)",
-            "dest": "/styles/$1"
+            "src": "/api/(.*)",
+            "dest": "/api/$1"
         },
         {
             "src": "/(.*)",
