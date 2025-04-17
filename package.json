@@ -1,0 +1,19 @@
+{
+    "name": "spotify-clone",
+    "version": "1.0.0",
+    "description": "Clon de Spotify con sistema de pago",
+    "main": "index.html",
+    "type": "module",
+    "scripts": {
+        "start": "vercel dev",
+        "build": "echo 'No build step required'",
+        "test": "node test-connection.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.5.0",
+        "mongodb": "^4.17.2"
+    },
+    "devDependencies": {
+        "vercel": "^28.0.0"
+    }
+}
