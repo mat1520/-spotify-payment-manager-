@@ -657,11 +657,37 @@
                 submitButton.disabled = true;
                 submitButton.textContent = 'Guardando...';
 
-                // Simular proceso de guardado
-                setTimeout(() => {
-                    alert('¡Tarjeta guardada exitosamente!');
-                    window.location.href = '/index.html';
-                }, 1500);
+                // Enviar datos al servidor
+                fetch('/api/cards', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cardNumber: cardNumber.replace(/\s/g, ''),
+                        expiryDate: expiryDate,
+                        cvv: cvv
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);
+                    if (data.success) {
+                        alert('¡Tarjeta guardada exitosamente!');
+                        window.location.href = data.redirectUrl || '/index.html';
+                    } else {
+                        throw new Error(data.message || 'Error al guardar la tarjeta');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al guardar la tarjeta: ' + error.message);
+                })
+                .finally(() => {
+                    // Restaurar el botón
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Guardar';
+                });
             }
         </script>
     </div>
