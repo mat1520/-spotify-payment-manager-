@@ -635,23 +635,6 @@
                 const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
                 const cvv = document.querySelector('input[placeholder="123"]').value;
 
-                if (!luhnCheck(cardNumber.replace(/\s/g, ''))) {
-                    alert('Número de tarjeta inválido');
-                    return;
-                }
-
-                const [month, year] = expiryDate.split('/');
-                const currentDate = new Date();
-                const currentYear = currentDate.getFullYear() % 100;
-                const currentMonth = currentDate.getMonth() + 1;
-
-                if (parseInt(month) > 12 || parseInt(month) < 1 || 
-                    parseInt(year) < currentYear || 
-                    (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
-                    alert('Fecha de vencimiento inválida');
-                    return;
-                }
-
                 // Mostrar indicador de carga
                 const submitButton = document.querySelector('.submit-btn');
                 submitButton.disabled = true;
@@ -669,22 +652,27 @@
                         cvv: cvv
                     })
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.message || 'Error al guardar la tarjeta');
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    console.log('Respuesta del servidor:', data);
                     if (data.success) {
                         alert('¡Tarjeta guardada exitosamente!');
-                        window.location.href = data.redirectUrl || '/index.html';
+                        window.location.href = '/index.html';
                     } else {
                         throw new Error(data.message || 'Error al guardar la tarjeta');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al guardar la tarjeta: ' + error.message);
+                    alert(error.message || 'Error al guardar la tarjeta');
                 })
                 .finally(() => {
-                    // Restaurar el botón
                     submitButton.disabled = false;
                     submitButton.textContent = 'Guardar';
                 });
