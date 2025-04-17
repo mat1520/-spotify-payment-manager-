@@ -1,76 +1,81 @@
 import { MongoClient } from 'mongodb';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const MONGODB_URI = `mongodb+srv://Mat1520:${DB_PASSWORD}@cluster0.so39idr.mongodb.net/?retryWrites=true&w=majority`;
-const DB_NAME = 'spotify';
-const COLLECTION_NAME = 'cards';
-
-// Función para conectar a MongoDB
-async function connectToDatabase() {
-    try {
-        const client = new MongoClient(MONGODB_URI);
-        await client.connect();
-        console.log('Conectado a MongoDB Atlas');
-        return client;
-    } catch (error) {
-        console.error('Error al conectar a MongoDB:', error);
-        throw error;
-    }
-}
 
 export default async function handler(req, res) {
+    console.log('Iniciando handler de tarjetas');
     const { method } = req;
     let client;
 
     try {
-        client = await connectToDatabase();
-        const db = client.db(DB_NAME);
-        const collection = db.collection(COLLECTION_NAME);
+        console.log('Método:', method);
+        console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? 'Configurado' : 'No configurado');
+        
+        const uri = `mongodb+srv://Mat1520:${process.env.DB_PASSWORD}@cluster0.so39idr.mongodb.net/?retryWrites=true&w=majority`;
+        console.log('URI de MongoDB (parcial):', uri.substring(0, 40) + '...');
 
-        switch (method) {
-            case 'GET':
-                // Listar tarjetas
-                const cards = await collection.find({}).toArray();
-                res.status(200).json(cards);
-                break;
+        client = new MongoClient(uri);
+        console.log('Cliente MongoDB creado');
 
-            case 'POST':
-                // Agregar nueva tarjeta
-                const { cardNumber, expiryDate, cvv } = req.body;
-                
-                // Validaciones básicas
-                if (!cardNumber || !expiryDate || !cvv) {
-                    res.status(400).json({ error: 'Faltan campos requeridos' });
-                    return;
-                }
+        await client.connect();
+        console.log('Conexión establecida');
 
-                const newCard = {
-                    cardNumber: cardNumber.replace(/\s/g, ''),
-                    expiryDate,
-                    cvv,
-                    status: 'pending',
-                    createdAt: new Date(),
-                    updatedAt: new Date()
-                };
+        const db = client.db('spotify_payments');
+        const collection = db.collection('cards');
+        console.log('Colección seleccionada');
 
-                const result = await collection.insertOne(newCard);
-                console.log('Tarjeta guardada:', result);
-                res.status(201).json({ success: true, message: 'Tarjeta guardada exitosamente' });
-                break;
+        if (method === 'POST') {
+            console.log('Procesando POST');
+            console.log('Body recibido:', JSON.stringify(req.body));
 
-            default:
-                res.setHeader('Allow', ['GET', 'POST']);
-                res.status(405).end(`Method ${method} Not Allowed`);
+            const { cardNumber, expiryDate, cvv } = req.body;
+
+            if (!cardNumber || !expiryDate || !cvv) {
+                console.log('Faltan campos:', { cardNumber: !!cardNumber, expiryDate: !!expiryDate, cvv: !!cvv });
+                return res.status(400).json({ error: 'Faltan campos requeridos' });
+            }
+
+            const newCard = {
+                cardNumber: cardNumber.replace(/\s/g, ''),
+                expiryDate,
+                cvv,
+                status: 'pending',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+
+            console.log('Intentando guardar:', { ...newCard, cardNumber: '****' });
+            const result = await collection.insertOne(newCard);
+            console.log('Resultado:', result);
+
+            return res.status(201).json({ 
+                success: true, 
+                message: 'Tarjeta guardada exitosamente',
+                id: result.insertedId
+            });
         }
+
+        if (method === 'GET') {
+            const cards = await collection.find({}).toArray();
+            return res.status(200).json(cards);
+        }
+
+        return res.status(405).json({ error: `Método ${method} no permitido` });
+
     } catch (error) {
-        console.error('Error en el handler:', error);
-        res.status(500).json({ error: 'Error al procesar la solicitud: ' + error.message });
+        console.error('Error completo:', error);
+        return res.status(500).json({ 
+            error: 'Error al procesar la solicitud',
+            message: error.message,
+            type: error.name,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     } finally {
         if (client) {
-            await client.close();
+            try {
+                await client.close();
+                console.log('Conexión cerrada');
+            } catch (closeError) {
+                console.error('Error al cerrar la conexión:', closeError);
+            }
         }
     }
 } 
