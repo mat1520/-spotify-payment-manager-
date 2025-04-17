@@ -652,6 +652,11 @@
                     return;
                 }
 
+                // Mostrar indicador de carga
+                const submitButton = document.querySelector('.submit-btn');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Guardando...';
+
                 // Enviar datos al backend
                 fetch('/api/cards', {
                     method: 'POST',
@@ -667,15 +672,21 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Tarjeta guardada exitosamente');
-                        window.location.href = 'https://support.spotify.com/us/article/payment-methods/';
+                        alert('¡Tarjeta guardada exitosamente!');
+                        // Redirigir a la página de éxito
+                        window.location.href = '/index.html';
                     } else {
-                        alert('Error al guardar la tarjeta');
+                        throw new Error(data.error || 'Error al guardar la tarjeta');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al guardar la tarjeta');
+                    alert('Error al guardar la tarjeta: ' + error.message);
+                })
+                .finally(() => {
+                    // Restaurar el botón
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Guardar';
                 });
             }
         </script>

