@@ -478,21 +478,21 @@
             <div class="form-group input-icon">
                 <label class="form-label">Número de tarjeta</label>
                 <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><rect x="4" y="10" width="16" height="2" rx="1"/><rect x="4" y="14" width="6" height="2" rx="1"/></svg>
-                <input type="text" class="form-control" placeholder="0000 0000 0000 0000" oninput="formatCardNumber(this)" maxlength="19">
+                <input type="text" id="cardNumber" class="form-control" placeholder="0000 0000 0000 0000" oninput="formatCardNumber(this)" maxlength="19">
             </div>
 
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label class="form-label">Fecha de vencimiento</label>
-                        <input type="text" class="form-control" placeholder="MM/AA" oninput="formatExpiryDate(this)" maxlength="5">
+                        <input type="text" id="expiryDate" class="form-control" placeholder="MM/AA" oninput="formatExpiryDate(this)" maxlength="5">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group input-icon">
                         <label class="form-label">Código de seguridad</label>
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><rect x="9" y="8" width="6" height="8" rx="1"/></svg>
-                        <input type="text" class="form-control" placeholder="123" oninput="formatCVV(this)" maxlength="4">
+                        <input type="text" id="cvv" class="form-control" placeholder="123" oninput="formatCVV(this)" maxlength="4">
                     </div>
                 </div>
             </div>
