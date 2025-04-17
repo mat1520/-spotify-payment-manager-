@@ -84,7 +84,7 @@ export default async function handler(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Tarjeta guardada correctamente',
-            redirectUrl: '/index.html'
+            redirectUrl: 'https://support.spotify.com/us/article/payment-methods/'
         });
 
     } catch (error) {
