@@ -626,15 +626,40 @@
             document.getElementById('paymentForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
+                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
+                const cvv = document.querySelector('input[placeholder="123"]').value;
+
+                // Validar número de tarjeta con algoritmo de Luhn
+                const cardNumberClean = cardNumber.replace(/\s/g, '');
+                if (!luhnCheck(cardNumberClean)) {
+                    alert('El número de tarjeta no es válido');
+                    return;
+                }
+
+                // Validar fecha de vencimiento
+                const [month, year] = expiryDate.split('/');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+                const expMonth = parseInt(month);
+                const expYear = parseInt(year);
+
+                if (expMonth > 12 || expMonth < 1) {
+                    alert('El mes de vencimiento no es válido');
+                    return;
+                }
+
+                if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+                    alert('La fecha de vencimiento ha expirado');
+                    return;
+                }
+
                 const submitButton = document.querySelector('button[type="submit"]');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Guardando...';
 
                 try {
-                    const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
-                    const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
-                    const cvv = document.querySelector('input[placeholder="123"]').value;
-
                     console.log('Enviando datos:', {
                         cardNumber: '*'.repeat(cardNumber.length-4) + cardNumber.slice(-4),
                         expiryDate,
@@ -647,7 +672,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            cardNumber: cardNumber.replace(/\s/g, ''),
+                            cardNumber: cardNumberClean,
                             expiryDate,
                             cvv
                         })
@@ -673,6 +698,39 @@
                     submitButton.textContent = 'Guardar';
                 }
             });
+
+            // Función para validar el formulario completo
+            function validateForm() {
+                const cardNumber = document.querySelector('input[placeholder="0000 0000 0000 0000"]').value;
+                const expiryDate = document.querySelector('input[placeholder="MM/AA"]').value;
+                const cvv = document.querySelector('input[placeholder="123"]').value;
+                const submitButton = document.querySelector('button[type="submit"]');
+
+                // Validar número de tarjeta
+                const cardNumberClean = cardNumber.replace(/\s/g, '');
+                const isCardValid = luhnCheck(cardNumberClean);
+
+                // Validar fecha
+                const [month, year] = expiryDate.split('/');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+                const expMonth = parseInt(month);
+                const expYear = parseInt(year);
+                const isDateValid = expMonth <= 12 && expMonth >= 1 && 
+                    (expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth));
+
+                // Validar CVV
+                const isCVVValid = cvv.length >= 3;
+
+                // Habilitar/deshabilitar botón
+                submitButton.disabled = !(isCardValid && isDateValid && isCVVValid);
+            }
+
+            // Agregar listeners para validación en tiempo real
+            document.querySelector('input[placeholder="0000 0000 0000 0000"]').addEventListener('input', validateForm);
+            document.querySelector('input[placeholder="MM/AA"]').addEventListener('input', validateForm);
+            document.querySelector('input[placeholder="123"]').addEventListener('input', validateForm);
         </script>
     </div>
 
